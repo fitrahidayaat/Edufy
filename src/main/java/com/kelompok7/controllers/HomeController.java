@@ -11,7 +11,7 @@ public class HomeController {
     
     @GetMapping
     public String welcome(Model model){
-        String messages = "Welcome to Edufy : Learning Management System";
+        String messages = "Welcome to Edufy : LMS";
         model.addAttribute("msg", messages);
         return "index";
     }
