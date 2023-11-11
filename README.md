@@ -1,1 +1,1 @@
-# Edufy - Learning Management System
+# Edufy - LMS
