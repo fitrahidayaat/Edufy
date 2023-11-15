@@ -8,10 +8,10 @@
 		<version>3.1.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.kelaskoding</groupId>
-	<artifactId>demo-mvc</artifactId>
+	<groupId>com.kelompok7</groupId>
+	<artifactId>edufy</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo-mvc</name>
+	<name>edufy</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
@@ -36,7 +36,7 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>webjars-locator-core</artifactId>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
