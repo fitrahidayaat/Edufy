@@ -8,7 +8,7 @@ public class Student extends User{
     
     }
 
-    public void submitAssigment(String assigmentID, file submision){
+    public void submitAssigment(String assigmentID/*, file submision*/){
         
     }
 }
