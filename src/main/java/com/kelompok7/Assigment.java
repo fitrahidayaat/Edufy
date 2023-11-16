@@ -8,10 +8,7 @@ public class Assigment {
     private Course course;
     private Date date;
     private List<Submision> submisionList = new ArrayList<Submision>();
-    //sasasda
-    /sasaskak
-    ssda
-    sasa
+    
     public void submit(String studentID, File submision){
 
     }

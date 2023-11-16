@@ -10,9 +10,7 @@ public class Teacher {
 
     
     public void createAssigment(String courseID, String assignmentDetails){
-        djbiaks
-        @#mkmaa
-        sklamlma
+        
     }
 
     public void createMaterial(String materialID, String materialDetails){
