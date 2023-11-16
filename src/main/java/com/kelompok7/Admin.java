@@ -1,19 +1,24 @@
 package com.kelompok7;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Assigment {
-    private String assignmentID;
-    private Course course;
-    private Date date;
-    private List<Submision> submisionList = new ArrayList<Submision>();
+public class Admin {
     
-    public void submit(String studentID, File submision){
+    public void addUser(String userType, String userDetails) {
+
+    }
+    
+    public void removeUser(String userID){
 
     }
 
-    public void grade(String studentID, int grade){
+    public void createCourse(String courseDetails){
+
+    }
+
+    public void assignTeacher(String courseID, String teacherID){
+
+    }
+
+    public void assignStudent(String courseID, String stuentID){
 
     }
 }
