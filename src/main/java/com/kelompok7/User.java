@@ -6,6 +6,8 @@ public class User{
     private String email;
     private String password;
 
+
+    // ubah ini
     public void login(String email, String password){
 
     }
