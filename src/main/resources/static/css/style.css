@@ -1,3 +1,7 @@
+@font-face {
+    font-family: "play-ful";
+    src: url("font\1.ttf");
+    }
 *{
     text-decoration: none;
     margin: 0px;
@@ -20,7 +24,7 @@ body{
     font-size: 50px;
     font-weight: 800px;
     float: left;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: bold;
     color: #364F6B;
 }
 
@@ -37,6 +41,7 @@ nav{
     position: -webkit-sticky;
     top: 0;
     background: #DEFCF9;
+    z-index: 1;
 }
 
 nav ul{
@@ -75,7 +80,7 @@ section{
     margin-bottom: 50px;
 }
 
-.kolom.deskripsi{
+.kolom .deskripsi{
     font-size: 20px;
     font-weight: bold;
     font-family: 'comic sans ms';
@@ -121,4 +126,120 @@ a.tmbl-pink{
 a.tmbl-pink:hover{
     background: #A3B763;
     text-decoration:none;
+}
+
+p{
+    margin: 10px 0px 10px 0px;
+    padding: 10px 0px 10px 0px;
+}
+
+.tengah{
+    text-align: center;
+    width: 100%;
+}
+
+.news-List{
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.news-picture{
+    width: 20%;
+    margin: 0 auto;
+}
+
+.news-picture img{
+    width: 100%;
+    border-radius: 10px;
+}
+
+.news-picture p{
+    font-family: 'comic sans ms';
+    font-weight: 500;
+    font-size: 25px;
+    text-align: center;
+    color: #364F6B;
+}
+
+.news-List .conf-button{
+    text-align: center;
+    margin: 80px 0px 0px 0px;
+}
+
+#aboutUs{
+    background: #dedede;
+    padding: 50px 0px 50px 0px;
+}
+
+.footer{
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+.footer-section{
+    width: 20%;
+    margin: 0 auto;
+}
+
+h3{
+    font-family: 'comic sans ms';
+    font-weight: 800;
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: #364F6B;
+    width: 100%;
+    line-height: 50px;
+}
+
+#copyright{
+    text-align: center;
+    width: 100%;
+    padding: 50px 0px 50px 0px;
+    margin-top: 20px;
+}
+
+@media screen and (max-width: 991.98px){
+    .wrapper{
+        width: 90%;
+    }
+
+    .logo a{
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
+    nav .menu{
+        width: 100%;
+        margin: 0;
+    }
+
+    nav .menu ul{
+        text-align: center;
+        margin: auto;
+        line-height: 60px;
+    }
+
+    nav .menu ul li{
+        display: inline-block;
+        float: none;
+    }
+
+    section{
+        display: block;
+    }
+    section img{
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .news-picture{
+        width: 50%;
+    }
 }
