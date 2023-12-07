@@ -1,6 +1,11 @@
 @font-face {
-    font-family: "play-ful";
-    src: url("font\1.ttf");
+    font-family: playful;
+    src: url(Stay_Playful.ttf);
+    }
+
+@font-face {
+    font-family: Arcade;
+    src: url(ARCADECLASSIC.TTF);
     }
 *{
     text-decoration: none;

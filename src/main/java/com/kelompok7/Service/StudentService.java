@@ -1,5 +1,7 @@
 package com.kelompok7.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +13,14 @@ public class StudentService {
     
     @Autowired
     private StudentRepository sRepo;
-    public void save(Student s){
+
+
+    public void saveStudent(Student s){
         sRepo.save(s);
+    }
+
+    public List<Student> showStudents(){
+        return sRepo.findAll();
     }
 
 }

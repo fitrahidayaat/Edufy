@@ -7,5 +7,5 @@ import com.kelompok7.Model.Student;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Integer> {
-    
+
 }
