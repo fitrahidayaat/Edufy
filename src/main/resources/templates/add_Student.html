@@ -1,88 +1,83 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/AdminHome">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="edit">Edit</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="news">News</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Add
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="Add_Student">Student</a></li>
-                  <li><a class="dropdown-item" href="Add_Teacher">Teacher</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="Add_Admin">Admin</a></li>
-                </ul>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  List
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="List_Student">Student</a></li>
-                  <li><a class="dropdown-item" href="Add_Teacher">Teacher</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="Add_Admin">Admin</a></li>
-                </ul>
-              </li>
-            </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
-        </div>
-      </nav>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Student Management System</title>
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#">Student Management System</a>
 
-      <div class="container">
-        <h4 class="text-center">Student-Register</h4>
-        <form th:action="@{/save}" method="post">
-          <div class="mb-3">
-            <label for="email" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" name="email">
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/students}">Student Management</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<br>
+<br>
+<div class = "container">
+  <div class = "row">
+    <div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+      <h1 class = "text-center"> Create New Student </h1>
+      <div class = "card-body">
+        <form th:action="@{/students}" th:object = "${student}" method="POST">
+          <div class ="form-group">
+            <label> Student First Name </label>
+            <input
+                    type = "text"
+                    name = ""
+                    th:field = "*{firstName}"
+                    class = "form-control"
+                    placeholder="Enter Student First Name"
+            />
           </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword" name="password">
+
+          <div class ="form-group">
+            <label> Student Last Name </label>
+            <input
+                    type = "text"
+                    name = "lastName"
+                    th:field = "*{lastName}"
+                    class = "form-control"
+                    placeholder="Enter Student Last Name"
+            />
           </div>
-          <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="exampleInputName" name="name">
+
+          <div class ="form-group">
+            <label> Student Email </label>
+            <input
+                    type = "text"
+                    name = "email"
+                    th:field = "*{email}"
+                    class = "form-control"
+                    placeholder="Enter Student Email"
+            />
           </div>
-          <div class="mb-3">
-            <label for="type" class="form-label">type</label>
-            <input type="text" class="form-control" id="exampleInputType" name="type" >
+
+          <div class = "box-footer">
+            <button type="submit" class = "btn btn-primary">
+              Submit
+            </button>
           </div>
-          <div class="mb-3">
-            <label for="grade" class="form-label">Grade</label>
-            <input type="number" class="form-control" id="exampleInputGrade" name="gradeLevel">
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
       </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  </body>
+    </div>
+  </div>
+</div>
+</body>
 </html>
