@@ -1,7 +1,12 @@
 package com.kelompok7.controllers;
 
+import com.kelompok7.Model.Admin;
 import com.kelompok7.Model.Student;
+import com.kelompok7.Model.Teacher;
+import com.kelompok7.Service.AdminService;
 import com.kelompok7.Service.StudentService;
+import com.kelompok7.Service.TeacherService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +16,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("")
 public class HomeController {
 
+    @Autowired
     StudentService studentService;
+    AdminService adminService;
 
-    public HomeController(StudentService studentService) {
+    TeacherService teacherService;
+
+//    public HomeController(StudentService studentService) {
+//        this.studentService = studentService;
+//    }
+
+
+    public HomeController(StudentService studentService, AdminService adminService, TeacherService teacherService) {
         this.studentService = studentService;
+        this.adminService = adminService;
+        this.teacherService = teacherService;
     }
-
 
     @GetMapping
     public String welcome(){
@@ -50,15 +65,8 @@ public class HomeController {
     }
 
 
-    @GetMapping("/Add_Teacher")
-    public String add_Teacher(){
-        return "add_Teacher";
-    }
 
-    @GetMapping("/Add_Admin")
-    public String add_Admin(){
-        return "add_Admin";
-    }
+
 
     //handlee method to handle list students and return mode and view
     @GetMapping("/Show_Student")
@@ -67,18 +75,34 @@ public class HomeController {
         return "students";
     }
 
-//    @GetMapping("/students/new")
-//    public String createStudentForm(Model model){
-//        //create student object to hold student data
-//        Student student = new Student();
-//        model.addAttribute("student",student);
-//        return "create_student";
-//    }
+    @GetMapping("/Show_Admin")
+    public String listAdmin(Model model){
+        model.addAttribute("admins", adminService.getAllAdmin());
+        return "admins";
+    }
+
+    @GetMapping("/Show_Teacher")
+    public String listTeacher(Model model){
+        model.addAttribute("teachers", teacherService.getAllTeacher());
+        return "teachers";
+    }
 
     @PostMapping("/students")
     public String saveStudent(@ModelAttribute("student") Student student){
         studentService.saveStudent(student);
         return "redirect:/Show_Student";
+    }
+
+    @PostMapping("/admins")
+    public  String saveAdmin(@ModelAttribute("admin") Admin admin){
+        adminService.saveAdmin(admin);
+        return "redirect:/Show_Teacher";
+    }
+
+    @PostMapping("/teachers")
+    public String saveTeacher(@ModelAttribute("teacher") Teacher teacher){
+        teacherService.saveTeacher(teacher);
+        return "redirect:/Show_Teacher";
     }
 
     @GetMapping("/Add_Student")
@@ -89,10 +113,38 @@ public class HomeController {
         return "create_student";
     }
 
+    @GetMapping("/Add_Admin")
+    public  String addAdminForm(Model model){
+        //create admin onject to hold admin data
+        Admin admin = new Admin();
+        model.addAttribute("admin",admin);
+        return "create_admin";
+    }
+
+    @GetMapping("/Add_Teacher")
+    public String addTeacherForm(Model model){
+        //create teacher object to hold teacher data
+        Teacher teacher = new Teacher();
+        model.addAttribute("teacher",teacher);
+        return "create_teacher";
+    }
+
     @GetMapping("/students/edit/{id}")
     public String editStudentForm(@PathVariable Long id, Model model){
         model.addAttribute("student",studentService.getStudentById(id));
         return "edit_student";
+    }
+
+    @GetMapping("/admins/edit/{id}")
+    public String editAdminForm(@PathVariable Long id, Model model){
+        model.addAttribute("admin",adminService.getAdminById(id));
+        return "edit_admin";
+    }
+
+    @GetMapping("/teachers/edit/{id}")
+    public String editTeacherForm(@PathVariable Long id, Model model){
+        model.addAttribute("teacher",teacherService.getTeacherById(id));
+        return "edit_teacher";
     }
 
     @PostMapping("/students/{id}")
@@ -112,11 +164,57 @@ public class HomeController {
         return "redirect:/Show_Student";
     }
 
+    @PostMapping("/admins/{id}")
+    public String updateStudent(@PathVariable Long id
+            ,@ModelAttribute("admin") Admin admin
+            ,Model model){
+        //get admin from db by id
+        Admin existingAdmin = adminService.getAdminById(id);
+        existingAdmin.setId(admin.getId());
+        existingAdmin.setName(admin.getName());
+        existingAdmin.setEmail(admin.getEmail());
+        existingAdmin.setPassword(admin.getPassword());
+        existingAdmin.setContact(admin.getContact());
+
+        //save updated admin object
+        adminService.updateAdmin(existingAdmin);
+        return "redirect:/Show_Admin";
+    }
+
+    @PostMapping("/teachers/{id}")
+    public String updateTeacher(@PathVariable Long id
+            ,@ModelAttribute("teacher") Teacher teacher
+            ,Model model){
+        //get teacher
+        Teacher existingTeacher = teacherService.getTeacherById(id);
+        existingTeacher.setId(teacher.getId());
+        existingTeacher.setName(teacher.getName());
+        existingTeacher.setEmail(teacher.getEmail());
+        existingTeacher.setPassword(teacher.getPassword());
+        existingTeacher.setContact(teacher.getContact());
+
+        //save updated teacher object
+        teacherService.updateTeacher(existingTeacher);
+        return "redirect:/Show_Teacher";
+    }
+
     //handler method to handle delete student request
     @GetMapping("/students/{id}")
     public String deleteStudent(@PathVariable Long id){
         studentService.deleteStudentById(id);
         return "redirect:/Show_Student";
+    }
+
+    @GetMapping("/admins/{id}")
+    public  String deleteAdmin(@PathVariable Long id){
+        adminService.deleteAdminById(id);
+        return "redirect:/Show_Admin";
+    }
+
+    @GetMapping("/teachers/{id}")
+    public String deleteTeacher(@PathVariable Long id){
+        teacherService.deleteTeacherById(id);
+        return "redirect:/Show_Teacher";
     }
     //testing testing
     //testing

@@ -3,6 +3,7 @@ package com.kelompok7.Service.Impl;
 import com.kelompok7.Model.Student;
 import com.kelompok7.Repository.StudentRepository;
 import com.kelompok7.Service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService {
 
+    @Autowired
     private StudentRepository studentRepo;
 
     public StudentServiceImpl(StudentRepository studentRepo) {
