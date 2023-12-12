@@ -1,67 +1,25 @@
 package com.kelompok7.controllers;
 
-import java.util.*;
-import java.util.concurrent.ExecutionException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.kelompok7.Model.Student;
 import com.kelompok7.Service.StudentService;
-
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@RestController
 @RequestMapping("")
 public class HomeController {
-    
-    @Autowired
-    private StudentService studentService;
 
-    @PostMapping("/Student")
-    public String saveStudent(@RequestBody Student student) throws InterruptedException, ExecutionException{
-        return studentService.saveStudent(student);
-    }
+    StudentService studentService;
 
-    @PutMapping("/Student")
-    public String updateStudent(@RequestBody Student student) throws InterruptedException, ExecutionException{
-        return studentService.updateStudent(student);
-    }
-
-    @GetMapping("/Student/{name}")
-    public Student getStudent(@PathVariable String name) throws InterruptedException, ExecutionException{
-        return studentService.getStudent(name);
-    }
-
-    @DeleteMapping("/Student/{name}")
-    public String deleteStudent(@PathVariable String name) throws InterruptedException, ExecutionException{
-        return studentService.deleteStudent(name);
-    }
-
-    @GetMapping("/Student")
-    public List<Student> getStudentall() throws InterruptedException, ExecutionException{
-        return studentService.getStudentall();
+    public HomeController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
 
     @GetMapping
-    public String welcome(Model model){
-        //String messages = "Welcome to Edufy : LMS";
-        // String messages = "Welcome to Edufy : Learning Management System";
-        //model.addAttribute("msg", messages);
+    public String welcome(){
         return "index";
     }
 
@@ -91,10 +49,6 @@ public class HomeController {
         return "adminHome";
     }
 
-    @GetMapping("/Add_Student")
-    public String add_Student(){
-        return "add_Student";
-    }
 
     @GetMapping("/Add_Teacher")
     public String add_Teacher(){
@@ -106,4 +60,64 @@ public class HomeController {
         return "add_Admin";
     }
 
+    //handlee method to handle list students and return mode and view
+    @GetMapping("/Show_Student")
+    public String listStudent(Model model) {
+        model.addAttribute("students", studentService.getAllStudent());
+        return "students";
+    }
+
+//    @GetMapping("/students/new")
+//    public String createStudentForm(Model model){
+//        //create student object to hold student data
+//        Student student = new Student();
+//        model.addAttribute("student",student);
+//        return "create_student";
+//    }
+
+    @PostMapping("/students")
+    public String saveStudent(@ModelAttribute("student") Student student){
+        studentService.saveStudent(student);
+        return "redirect:/Show_Student";
+    }
+
+    @GetMapping("/Add_Student")
+    public String addStudentForm(Model model){
+        //create student object to hold student data
+        Student student = new Student();
+        model.addAttribute("student",student);
+        return "create_student";
+    }
+
+    @GetMapping("/students/edit/{id}")
+    public String editStudentForm(@PathVariable Long id, Model model){
+        model.addAttribute("student",studentService.getStudentById(id));
+        return "edit_student";
+    }
+
+    @PostMapping("/students/{id}")
+    public String UpdateStudent(@PathVariable Long id
+            ,@ModelAttribute("student") Student student
+            ,Model model){
+        //get student from db by id
+        Student existingStudent = studentService.getStudentById(id);
+        existingStudent.setId(id);
+        existingStudent.setName(student.getName());
+        existingStudent.setEmail(student.getEmail());
+        existingStudent.setPassword(student.getPassword());
+        existingStudent.setGrade(student.getGrade());
+
+        //save updated student object
+        studentService.updateStudent(existingStudent);
+        return "redirect:/Show_Student";
+    }
+
+    //handler method to handle delete student request
+    @GetMapping("/students/{id}")
+    public String deleteStudent(@PathVariable Long id){
+        studentService.deleteStudentById(id);
+        return "redirect:/Show_Student";
+    }
+    //testing testing
+    //testing
 }
