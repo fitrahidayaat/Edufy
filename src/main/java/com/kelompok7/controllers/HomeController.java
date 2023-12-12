@@ -1,33 +1,25 @@
 package com.kelompok7.controllers;
 
-import java.util.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.kelompok7.Model.Student;
 import com.kelompok7.Service.StudentService;
-
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
 @RequestMapping("")
 public class HomeController {
-    
-    @Autowired
-    private StudentService studentService;
+
+    StudentService studentService;
+
+    public HomeController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
 
     @GetMapping
-    public String welcome(Model model){
-        //String messages = "Welcome to Edufy : LMS";
-        // String messages = "Welcome to Edufy : Learning Management System";
-        //model.addAttribute("msg", messages);
+    public String welcome(){
         return "index";
     }
 
@@ -57,10 +49,6 @@ public class HomeController {
         return "adminHome";
     }
 
-    @GetMapping("/Add_Student")
-    public String add_Student(){
-        return "add_Student";
-    }
 
     @GetMapping("/Add_Teacher")
     public String add_Teacher(){
@@ -72,23 +60,62 @@ public class HomeController {
         return "add_Admin";
     }
 
-    @GetMapping("/List_Student")
-	public ModelAndView showStudent() {
-		List<Student>listS=studentService.showStudents();
-//		ModelAndView m=new ModelAndView();
-//		m.setViewName("bookList");
-//		m.addObject("book",list);
-		return new ModelAndView("List_Student","student",listS);
-	}
-
-    @PostMapping("/save")
-    public String addStudent(@ModelAttribute Student s){
-        studentService.saveStudent(s);
-        return "redirect:/List_Student";
+    //handlee method to handle list students and return mode and view
+    @GetMapping("/Show_Student")
+    public String listStudent(Model model) {
+        model.addAttribute("students", studentService.getAllStudent());
+        return "students";
     }
 
-    @GetMapping("/getTest")
-    public List<Student> getS(){
-        return studentService.showStudents();
+//    @GetMapping("/students/new")
+//    public String createStudentForm(Model model){
+//        //create student object to hold student data
+//        Student student = new Student();
+//        model.addAttribute("student",student);
+//        return "create_student";
+//    }
+
+    @PostMapping("/students")
+    public String saveStudent(@ModelAttribute("student") Student student){
+        studentService.saveStudent(student);
+        return "redirect:/Show_Student";
+    }
+
+    @GetMapping("/Add_Student")
+    public String addStudentForm(Model model){
+        //create student object to hold student data
+        Student student = new Student();
+        model.addAttribute("student",student);
+        return "create_student";
+    }
+
+    @GetMapping("/students/edit/{id}")
+    public String editStudentForm(@PathVariable Long id, Model model){
+        model.addAttribute("student",studentService.getStudentById(id));
+        return "edit_student";
+    }
+
+    @PostMapping("/students/{id}")
+    public String UpdateStudent(@PathVariable Long id
+            ,@ModelAttribute("student") Student student
+            ,Model model){
+        //get student from db by id
+        Student existingStudent = studentService.getStudentById(id);
+        existingStudent.setId(id);
+        existingStudent.setName(student.getName());
+        existingStudent.setEmail(student.getEmail());
+        existingStudent.setPassword(student.getPassword());
+        existingStudent.setGrade(student.getGrade());
+
+        //save updated student object
+        studentService.updateStudent(existingStudent);
+        return "redirect:/Show_Student";
+    }
+
+    //handler method to handle delete student request
+    @GetMapping("/students/{id}")
+    public String deleteStudent(@PathVariable Long id){
+        studentService.deleteStudentById(id);
+        return "redirect:/Show_Student";
     }
 }

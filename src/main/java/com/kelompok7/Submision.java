@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class Submision {
     private String submisionID;
     private Assigment assigment;
-    private Student student;
+    //private Student student;
     //private file submisionFile;
     private LocalDateTime timestamp;
     private int grade;
@@ -21,9 +21,9 @@ public class Submision {
     public Assigment getAssigment() {
         return assigment;
     }
-    public Student getStudent() {
-        return student;
-    }
+    // public Student getStudent() {
+    //     return student;
+    // }
     /*public file getSubmisionFile() {
         return submisionFile;
     }
