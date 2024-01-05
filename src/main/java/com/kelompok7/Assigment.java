@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 public class Assigment {
     private String assignmentID;
-    private Course course;
+   // private Course course;
     private LocalDate date;
     private List<Submision> submisionList = new ArrayList<Submision>();
     

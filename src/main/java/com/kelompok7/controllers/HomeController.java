@@ -1,15 +1,21 @@
 package com.kelompok7.controllers;
 
 import com.kelompok7.Model.Admin;
+import com.kelompok7.Model.Course;
 import com.kelompok7.Model.Student;
 import com.kelompok7.Model.Teacher;
+import com.kelompok7.Repository.CourseRepository;
 import com.kelompok7.Service.AdminService;
+import com.kelompok7.Service.CourseService;
 import com.kelompok7.Service.StudentService;
 import com.kelompok7.Service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller
@@ -22,15 +28,13 @@ public class HomeController {
 
     TeacherService teacherService;
 
-//    public HomeController(StudentService studentService) {
-//        this.studentService = studentService;
-//    }
+    CourseService courseService;
 
-
-    public HomeController(StudentService studentService, AdminService adminService, TeacherService teacherService) {
+    public HomeController(StudentService studentService, AdminService adminService, TeacherService teacherService, CourseService courseService) {
         this.studentService = studentService;
         this.adminService = adminService;
         this.teacherService = teacherService;
+        this.courseService = courseService;
     }
 
     @GetMapping
@@ -69,6 +73,84 @@ public class HomeController {
 
 
     //handlee method to handle list students and return mode and view
+
+
+    List<Long> ids = new ArrayList<Long>();
+
+
+
+    @GetMapping("/Add_course")
+    public String addCourseForm(Model model){
+        //create student object to hold student data
+        Course course = new Course();
+        model.addAttribute("course",course);
+        return "create_course";
+    }
+
+    @PostMapping("/courses")
+    public String saveCourse(@ModelAttribute("course") Course course){
+        courseService.saveCourse(course);
+        return "redirect:/Show_Course";
+    }
+
+    @GetMapping("/Show_Course")
+    public String listCourse(Model model) {
+        model.addAttribute("courses", courseService.getAllCourse());
+        return "courses";
+    }
+
+
+    @GetMapping("/courses/edit/{id}")
+    public String editCourseForm(@PathVariable Long id, Model model){
+        model.addAttribute("course",courseService.getCourseById(id));
+        return "edit_course";
+    }
+
+    @PostMapping("/courses/{id}")
+    public String UpdateCourse(@PathVariable Long id
+            ,@ModelAttribute("course") Course course
+            ,Model model){
+        //get student from db by id
+        Course existingCourse = courseService.getCourseById(id);
+        existingCourse.setId(id);
+        existingCourse.setName(course.getName());
+
+        //save updated student object
+        courseService.updateCourse(existingCourse);
+        return "redirect:/Show_Course";
+    }
+
+    @GetMapping("/courses/{id}")
+    public String deleteCourse(@PathVariable Long id){
+        courseService.deleteCourseById(id);
+        return "redirect:/Show_Course";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @GetMapping("/Show_Student")
     public String listStudent(Model model) {
         model.addAttribute("students", studentService.getAllStudent());
@@ -96,7 +178,7 @@ public class HomeController {
     @PostMapping("/admins")
     public  String saveAdmin(@ModelAttribute("admin") Admin admin){
         adminService.saveAdmin(admin);
-        return "redirect:/Show_Teacher";
+        return "redirect:/Show_Admin";
     }
 
     @PostMapping("/teachers")
@@ -216,7 +298,5 @@ public class HomeController {
         teacherService.deleteTeacherById(id);
         return "redirect:/Show_Teacher";
     }
-    //testing testing
-    //testing
-    //testing1
+
 }
