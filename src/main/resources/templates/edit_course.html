@@ -2,16 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Edit Student</title>
+    <title>Edit Course</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
 </head>
 <body>
-<nav class="navbar navbar-expand-md bg-primary bg-gradient navbar-dark">
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <!-- Brand -->
-    <a class="navbar-brand" href="#">Student </a>
+    <a class="navbar-brand" href="#">Course</a>
 
     <!-- Toggler/collapsibe Button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -25,7 +25,7 @@
                 <a class="nav-link" th:href="@{/AdminHome}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/Users}">User</a>
+                <a class="nav-link" th:href="@{/Course}">Course</a>
             </li>
         </ul>
     </div>
@@ -35,9 +35,20 @@
 <div class = "container">
     <div class = "row">
         <div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-            <h1 class = "text-center"> Update Student </h1>
+            <h1 class = "text-center"> Update Course </h1>
             <div class = "card-body">
-                <form th:action="@{/students/{id} (id=${student.id})}" th:object = "${student}" method="POST">
+                <form th:action="@{/courses/{id} (id=${course.id})}" th:object = "${course}" method="POST">
+                    <div class ="form-group">
+                        <label> id </label>
+                        <input
+                                type = "text"
+                                name = "id"
+                                th:field = "*{id}"
+                                class = "form-control"
+                                placeholder="Enter Course Id"
+                        />
+                    </div>
+
                     <div class ="form-group">
                         <label> Name </label>
                         <input
@@ -45,40 +56,7 @@
                                 name = "name"
                                 th:field = "*{name}"
                                 class = "form-control"
-                                placeholder="Enter Student Name"
-                        />
-                    </div>
-
-                    <div class ="form-group">
-                        <label> Email </label>
-                        <input
-                                type = "email"
-                                name = "email"
-                                th:field = "*{email}"
-                                class = "form-control"
-                                placeholder="Enter Student Email"
-                        />
-                    </div>
-
-                    <div class ="form-group">
-                        <label> Student Email </label>
-                        <input
-                                type = "text"
-                                name = "password"
-                                th:field = "*{password}"
-                                class = "form-control"
-                                placeholder="Enter Student Password"
-                        />
-                    </div>
-
-                    <div class ="form-group">
-                        <label> Student Email </label>
-                        <input
-                                type = "text"
-                                name = "grade"
-                                th:field = "*{grade}"
-                                class = "form-control"
-                                placeholder="Enter Student Grade"
+                                placeholder="Enter Course Name"
                         />
                     </div>
 

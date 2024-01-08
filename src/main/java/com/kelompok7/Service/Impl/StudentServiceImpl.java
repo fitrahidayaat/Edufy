@@ -42,5 +42,9 @@ public class StudentServiceImpl implements StudentService {
         studentRepo.deleteById(id);
     }
 
+    public Student login(String email, String password) {
+        Student user = studentRepo.findByEmailAndPassword(email, password);
+        return user;
+    }
 
 }
