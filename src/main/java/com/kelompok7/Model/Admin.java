@@ -17,12 +17,12 @@ public class Admin {
     private String password;
 
     @Column(name = "contact")
-    private int contact;
+    private String contact;
 
     public Admin() {
     }
 
-    public Admin(long id, String name, String email, String password, int contact) {
+    public Admin(long id, String name, String email, String password, String contact) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -62,11 +62,11 @@ public class Admin {
         this.password = password;
     }
 
-    public int getContact() {
+    public String getContact() {
         return contact;
     }
 
-    public void setContact(int contact) {
+    public void setContact(String contact) {
         this.contact = contact;
     }
 }
